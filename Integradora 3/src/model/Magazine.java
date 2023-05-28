@@ -19,6 +19,15 @@ public class Magazine extends BibliographicProduct{
         
     }
 
+    public Magazine(Magazine magazineToCopy) {
+        super(magazineToCopy.getId(), magazineToCopy.getName(), magazineToCopy.getNumberPages(), magazineToCopy.getPublishDate(),magazineToCopy.getSellPrice(),magazineToCopy.getUrl());
+   
+        this.periodicity = periodicity;
+        this.activeSubscrip = activeSubscrip;
+        this.category = category;
+        
+    }
+
 
 
     public String getPeriodicity() {

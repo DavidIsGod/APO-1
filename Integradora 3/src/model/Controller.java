@@ -189,8 +189,9 @@ public class Controller {
         return listOfUsers;
     }
 
-    public boolean modifyMagazines(int option,String newMagazineId, String newMagazineName,int newMagazineNumberPages,String newdate,int newMagazineType, String newMagazineURl,double newSellPriceMagazine, String newPeriodicity){
+    public boolean modifyMagazines(int option,int option2,String newMagazineId, String newMagazineName,int newMagazineNumberPages,String newdate,int newMagazineType, String newMagazineURl,double newSellPriceMagazine, String newPeriodicity){
 
+        
         MagazineCategory magType = MagazineCategory.VARIETIES;
         switch(newMagazineType){
 
@@ -217,16 +218,19 @@ public class Controller {
         }
 
             BibliographicProduct magazine = listOfBibliographicProducts.get(option);
-                
-                    magazine.setId(newMagazineId);
-                    magazine.setName(newMagazineName);
-                    magazine.setNumberPages(newMagazineNumberPages);
-                    ((Magazine) magazine).setPeriodicity(newPeriodicity);
-                    ((Magazine)magazine).setCategory(magType);
-                    magazine.setUrl(newMagazineURl);  
-                    magazine.setSellPrice(newSellPriceMagazine);  
-                    
-        return true;
+              if(magazine instanceof Magazine){
+                magazine.setId(newMagazineId);
+                magazine.setName(newMagazineName);
+                magazine.setNumberPages(newMagazineNumberPages);
+                ((Magazine) magazine).setPeriodicity(newPeriodicity);
+                ((Magazine)magazine).setCategory(magType);
+                magazine.setUrl(newMagazineURl);  
+                magazine.setSellPrice(newSellPriceMagazine);  
+               return true;
+             }
+                  
+              return false;      
+       
     }
 
 

@@ -2,7 +2,7 @@
 
 import java.util.Scanner;
 import model.Controller;
-import model.Standard;
+
 
 public class Executable {
     
@@ -90,6 +90,15 @@ public class Executable {
         int idUser = Integer.valueOf(reader.nextLine());
 
         System.out.println(controller.myLibrary(idUser));
+
+        if(controller.myLibrary(idUser) != null){
+            
+            System.out.println("Here is the Library of the User: ");
+            System.out.println("");
+        }else{
+            
+            System.out.println("No sirve");
+        }
 
 
 
@@ -337,8 +346,10 @@ public class Executable {
             System.out.println("This is the new information");
             System.out.println();
 
-            if(controller.modifyMagazines(option-1, newMagazineId, newMagazineName, newMagazineNumberPages, newdate, newMagazineNumberPages, newMagazineURl, newSellPriceMagazine, newPeriodicity)){
+            if(controller.modifyMagazines(option,option2-1, newMagazineId, newMagazineName, newMagazineNumberPages, newdate, newMagazineNumberPages, newMagazineURl, newSellPriceMagazine, newPeriodicity)){
+                System.out.println("---------------------------------");
                 System.out.println("Magazine modified Succesfully");
+                System.out.println("-------------------------------------");
             }else{
                 System.out.println("Magazine couldnt be modified");
             }

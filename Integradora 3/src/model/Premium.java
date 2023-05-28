@@ -6,31 +6,17 @@ import java.util.Calendar;
 
 public class Premium extends User {
   
-    private ArrayList<Book> listOfBooks;
     private ArrayList<Ticket> listoFTickets;
-    private ArrayList<Magazine>listOfMagazines;
+    private ArrayList<BibliographicProduct>listOfProducts;
   
   
     public Premium(String name, String id, Calendar vinculationDate) {
         super(name, id, vinculationDate);
 
-        this.listOfBooks = new ArrayList<Book>();
-        this.listOfMagazines = new ArrayList<Magazine>();
         this.listoFTickets = new ArrayList<>();
+        this.listOfProducts = new ArrayList<>();
         
     }
-
-
-
-    public ArrayList<Book> getListOfBooks() {
-        return listOfBooks;
-    }
-
-
-    public void setListOfBooks(ArrayList<Book> listOfBooks) {
-        this.listOfBooks = listOfBooks;
-    }
-
 
     public ArrayList<Ticket> getListoFTickets() {
         return listoFTickets;
@@ -42,24 +28,15 @@ public class Premium extends User {
     }
 
 
-    public ArrayList<Magazine> getListOfMagazines() {
-        return listOfMagazines;
-    }
-
-
-    public void setListOfMagazines(ArrayList<Magazine> listOfMagazines) {
-        this.listOfMagazines = listOfMagazines;
-    }
-
     public String showBookList(){
 
         String BooksList = "";
 
-        for(int i = 0; i< listOfBooks.size(); i++){
+        for(int i = 0; i< listOfProducts.size(); i++){
         
-            if (listOfBooks.get(i) instanceof Book) {
+            if (listOfProducts.get(i) instanceof Book) {
             
-                BooksList+= (i +1)+ ". " + listOfBooks.get(i).getName() + "\n";
+                BooksList+= (i +1)+ ". " + listOfProducts.get(i).getName() + "\n";
             }
         }
         return BooksList;
@@ -69,26 +46,29 @@ public class Premium extends User {
 
         String BooksList = "";
 
-        for(int i = 0; i< listOfMagazines.size(); i++){
+        for(int i = 0; i< listOfProducts.size(); i++){
         
-            if (listOfMagazines.get(i) instanceof Magazine) {
+            if (listOfProducts.get(i) instanceof Magazine) {
             
-                BooksList+= (i +1)+ ". " + listOfMagazines.get(i).getName() + "\n";
+                BooksList+= (i +1)+ ". " + listOfProducts.get(i).getName() + "\n";
             }
         }
         return BooksList;
     }
 
     public boolean cancelSub(int idMag) {
-        listOfMagazines.remove(idMag-1);
-        return true;
+        if(listOfProducts.get(idMag) instanceof Magazine){
+            listOfProducts.remove(idMag-1);
+            return true;
+        }
+       return false;
     }
 
 
     @Override
     public boolean buyBook(BibliographicProduct bp) {
         Book copy = new Book((Book) bp);
-        return listOfBooks.add(copy);
+        return listOfProducts.add(copy);
     }
 
 
@@ -103,33 +83,23 @@ public class Premium extends User {
 
     @Override
     public boolean buyMagazine(BibliographicProduct bp) {
-       return listOfMagazines.add((Magazine)bp);
+       return listOfProducts.add((Magazine)bp);
     }
 
-    public int addPagesInBook(){
+    public int addPages(){
 
-        int bookAcumulRead = 0;
+        int AcumulRead = 0;
  
-        for (int i = 0; i < listOfBooks.size(); i++) {
-            if(listOfBooks.get(i) instanceof Book){
-                bookAcumulRead += listOfBooks.get(i).getPagesAcum();
+        for (int i = 0; i < listOfProducts.size(); i++) {
+            if(listOfProducts.get(i) instanceof Book){
+                AcumulRead += listOfProducts.get(i).getPagesAcum();
             }
             
         }
-        return bookAcumulRead;
+        return AcumulRead;
     }
 
-    public int addPagesInMagazine(){
-        int magAcumulRead = 0;
-
-        for (int i = 0; i < listOfMagazines.size(); i++) {
-            if(listOfMagazines.get(i) instanceof Magazine){
-                magAcumulRead += listOfMagazines.get(i).getPagesAcum();
-            }
-        }
-        return magAcumulRead;
-    }
-
+ 
     public String toStringPremium(){
 
         String msg = "";
@@ -142,7 +112,28 @@ public class Premium extends User {
     }
 
     @Override
-    public String getProducts() {
+
+    public String getProducts(){
+        String msg = "[ ___ ][  0 ][  1 ][  2 ][  3 ][  4 ]";
+        for (int i = 0; i < getListAllLibraries().size(); i++) {
+            for (int j = 0; j < getListAllLibraries().get(i).length; j++) {
+                for (int j2 = 0; j2 < getListAllLibraries().get(i).length; j2++) {
+                    if (getListAllLibraries().get(i)[j][j2] != null) {
+                        msg += "[ " + getListAllLibraries().get(i)[j][j2].getId() + " ]";
+                    } else {
+                        msg += "[ _ ]";
+                    }
+                    
+                }
+                msg += "\n";
+            }
+            msg += "\n";
+        }
+        
+        return msg;
+    }
+
+    /*  public String getProducts() {
                 String msg = "[ ___ ][  0 ][  1 ][  2 ][  3 ][  4 ]";
                 for (int i = 0; i < getListAllLibraries().size(); i++) {
                     for (int j = 0; j < getListAllLibraries().get(i).length; j++) {
@@ -164,20 +155,20 @@ public class Premium extends User {
         
         
         return msg;
-    }
+    }/* */
 
-  
-    public void initMatrixBook() {
-        insertionSortBooks();
-        insertionSortBooks();
-        insertionSortMagazines();
-        ArrayList<BibliographicProduct[][]> temp = new ArrayList<>();
+    public void initMatrix() {
+        insertionSort();
+        listOfProducts.forEach((bibliographicProduct) ->{
+            System.out.println(bibliographicProduct.getPublishDate());
+        });
+        ArrayList<BibliographicProduct[][]> temp = new ArrayList<>((int)Math.ceil(listOfProducts.size()/25));
         int cont = 0;
-        for (int h = 0; h < listOfBooks.size(); h++) {
+        for (int h = 0; h < temp.size(); h++) {
             BibliographicProduct[][] matrix = new BibliographicProduct[5][5];
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j <= matrix.length; j++) {
-                    matrix[i][j] = listOfBooks.get(cont);
+                    matrix[i][j] = listOfProducts.get(cont);
                     cont++;
                 }
             }
@@ -185,30 +176,19 @@ public class Premium extends User {
         }
 
         setListAllLibraries(temp);
-    
     }
-    
-    public void insertionSortBooks() { 
+  
+    public void insertionSort() { 
         
-        for (int rojo = 1; rojo <listOfBooks.size(); rojo++){
+        for (int rojo = 1; rojo <listOfProducts.size(); rojo++){
             for (int verde = 0; verde < rojo; verde++) {
-                if (listOfBooks.get(rojo).getPublishDate().compareTo(listOfBooks.get(verde).getPublishDate()) < 0) {
-                    listOfBooks.add(verde, listOfBooks.remove(rojo));
-                    break;
-                }
-            }
-        }
-    }
-
-    public void insertionSortMagazines() { 
-        
-        for (int rojo = 1; rojo <listOfMagazines.size(); rojo++){
-            for (int verde = 0; verde < rojo; verde++) {
-                if (listOfMagazines.get(rojo).getPublishDate().compareTo(listOfMagazines.get(verde).getPublishDate()) < 0) {
-                    listOfMagazines.add(verde, listOfMagazines.remove(rojo));
+                if (listOfProducts.get(rojo).getPublishDate().compareTo(listOfProducts.get(verde).getPublishDate()) < 0) {
+                    listOfProducts.add(verde, listOfProducts.remove(rojo));
                     break;
                 }
             }
         }
     }
 }
+
+  

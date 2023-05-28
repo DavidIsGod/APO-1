@@ -11,7 +11,7 @@ public abstract class BibliographicProduct {
     private int pagesAcum;
     private String Url = "//Https.";
     private int amountSoldUnits;
-    private int[] [] library = new int [5] [5];
+
 
 
     public BibliographicProduct(String id,String name,int numberPages,String publishDate,double sellPrice,String url) {
