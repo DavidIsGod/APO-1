@@ -390,7 +390,7 @@ public class Executable {
             System.out.println("Type the sell Price of the Book");
             double newSellPrice = Integer.valueOf(reader.nextLine());
 
-            if(controller.modifyBooks(option2-1,newid,newName,newNumberPages,newReview,newDate,newGenderBook,newURL,newSellPrice)){
+            if(controller.modifyBooks(option,option2-1,newid,newName,newNumberPages,newReview,newDate,newGenderBook,newURL,newSellPrice)){
                 System.out.println("----------------------------");
                 System.out.println("Book modified succesfully");
                 System.out.println("------------------------------");
@@ -531,7 +531,7 @@ public class Executable {
 
         switch (optionInform) {
              case 1:
-                
+              
                 break;
 
                 case 2:

@@ -35,6 +35,17 @@ public class Controller {
     }
     
 
+    /**
+     * @param id
+     * @param name
+     * @param numberPages
+     * @param publishDate
+     * @param sellPrice
+     * @param url
+     * @param periodicity
+     * @param category
+     * @return
+     */
     public boolean regMagazine(String id,String name,int numberPages,String publishDate,double sellPrice,String url,String periodicity,int category){
       
         MagazineCategory type = MagazineCategory.VARIETIES;
@@ -89,17 +100,17 @@ public class Controller {
        return false;
     }
     
-    public String readingSession(int idUser,int idBook){
-
+    public String readingSession(int idUser,int idProduct,BibliographicProduct bp,User user){
+        
         String msg = ""; 
+        String ad1 = "-------------------------------------------------\n¡Suscríbete al Combo Plus y llévate Disney+ y Star+ a un precio increíble!\n--------------------------------------------";
+        String ad2 = "Ahora tus mascotas tienen una app favorita: Laika. Los mejores productos para tu peludito.";
+        String ad3 = "¡Estamos de aniversario! Visita tu Éxito más cercano y sorpréndete con las mejores ofertas.";
 
-      
-
-
-
-        return msg;
-    }
-
+        
+            return msg;
+        }
+    
     public boolean sellBook(int idUser, int idBook){
 
         if(idBook >= listOfBibliographicProducts.size() || idUser >= listOfUsers.size()){
@@ -234,7 +245,7 @@ public class Controller {
     }
 
 
-    public boolean modifyBooks(int option2,String newid,String newName,int newNumberPages,String newReview,String newDate,int newGenderBook,String newURL,double newSellPrice){
+    public boolean modifyBooks(int option,int option2,String newid,String newName,int newNumberPages,String newReview,String newDate,int newGenderBook,String newURL,double newSellPrice){
 
         BookType type = BookType.FANTASY;
 
@@ -264,7 +275,7 @@ public class Controller {
         }
 
        BibliographicProduct book =  listOfBibliographicProducts.get(option2);
-
+        if(book instanceof Book){
         book.setId(newid);
         book.setName(newName);
         book.setNumberPages(newNumberPages);
@@ -273,6 +284,8 @@ public class Controller {
         ((Book) book).setBookType(type);
         book.setUrl(newURL);
         book.setSellPrice(newSellPrice);
+        return true;
+        }
         return false;
     }
 
@@ -353,15 +366,18 @@ public class Controller {
         System.out.println("----------------------------");
         System.out.println("¡Welcome To Your Ticket!");
         System.out.println("The date of the Transaction Was: " +date);
-        System.out.println("The Amount Paid Was: " +amountPaid);
+        System.out.println("The Amount Paid Was: " +amountPaid+ "$");
         System.out.println("-------------------------------------------");
 
     }
 
     public String myLibrary(int idUser){
         String msg = "";
-
+        if (listOfUsers != null && listOfUsers.size() > idUser) {
         msg += listOfUsers.get(idUser).getProducts();
+        }else{
+            return msg+= "List of Users is Empty or the iD selected Doesnt exist";
+        }
         return msg;
     }
 

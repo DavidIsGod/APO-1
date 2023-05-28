@@ -114,49 +114,30 @@ public class Premium extends User {
     @Override
 
     public String getProducts(){
+        
         String msg = "[ ___ ][  0 ][  1 ][  2 ][  3 ][  4 ]";
-        for (int i = 0; i < getListAllLibraries().size(); i++) {
-            for (int j = 0; j < getListAllLibraries().get(i).length; j++) {
-                for (int j2 = 0; j2 < getListAllLibraries().get(i).length; j2++) {
-                    if (getListAllLibraries().get(i)[j][j2] != null) {
-                        msg += "[ " + getListAllLibraries().get(i)[j][j2].getId() + " ]";
-                    } else {
-                        msg += "[ _ ]";
-                    }
-                    
-                }
-                msg += "\n";
-            }
-            msg += "\n";
-        }
         
-        return msg;
-    }
-
-    /*  public String getProducts() {
-                String msg = "[ ___ ][  0 ][  1 ][  2 ][  3 ][  4 ]";
-                for (int i = 0; i < getListAllLibraries().size(); i++) {
-                    for (int j = 0; j < getListAllLibraries().get(i).length; j++) {
-                        if(getListAllLibraries().get(i)[j] != null){
-                        msg+= "[ " +j+ "]";
-                        for (int j2 = 0; j2 < getListAllLibraries().get(i).length; j2++) {
-                            if (getListAllLibraries().get(i)[j][j2] != null) {
-                                msg += "[ " + getListAllLibraries().get(i)[j][j2].getId() + " ]";
-                            } else {
-                                msg += "[ _ ]";
-                            }
-                            
+        if(getListAllLibraries() != null ){
+            for (int i = 0; i < getListAllLibraries().size(); i++) {
+                for (int j = 0; j < getListAllLibraries().get(i)[j].length; j++) {
+                    for (int j2 = 0; j2 < getListAllLibraries().get(i).length; j2++) {
+                        if (getListAllLibraries().get(i)[j][j2] != null) {
+                            msg += "[ " + getListAllLibraries().get(i)[j][j2].getId() + " ]";
+                        } else {
+                            msg += "[ _ ]";
                         }
-                        msg += "\n";
+                        
                     }
+                    msg += "\n";
                 }
                 msg += "\n";
             }
+            
+            return msg;
+        }
+        return msg+= "The list is Empty or Null";
+    }
         
-        
-        return msg;
-    }/* */
-
     public void initMatrix() {
         insertionSort();
         listOfProducts.forEach((bibliographicProduct) ->{
