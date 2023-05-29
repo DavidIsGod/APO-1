@@ -442,6 +442,8 @@ public class Executable {
         switch(optionToRead){
 
             case 1:
+            
+            int counterPages = 1;
             int optionUserRead = 0;
             int optionMagUser = 0;
             System.out.println("Select the User that wants to read");
@@ -451,19 +453,49 @@ public class Executable {
             System.out.println(query2);
              optionUserRead= Integer.valueOf(reader.nextLine());
 
-             System.out.println("Here is the available products buyed by the User");
+             System.out.println("Here are the available products buyed by the User");
              System.out.println(query);
              optionMagUser = Integer.valueOf(reader.nextLine());
+
              
 
+             
+            System.out.println("Reading Session In Progress ");
 
 
+             System.out.println("You are Actually Reading: " +query);
 
+             System.out.println("Reading Page number" +counterPages);
 
-            break;
+             System.out.println("Type A for going to the Next Page");
+             System.out.println("Type S for going to the last Page");
+             System.out.println("Type B for going to the Library");
+             String optionPagesUser = reader.nextLine();
+
+            
+             switch (optionPagesUser) {
+                case "A":
+                    counterPages++;
+                    break;
+                    case "S":
+                    counterPages--;
+                    break;
+                    case "B":
+                    myLibrary();
+                    break;
+                default:
+                System.out.println("Please type a valid option");
+                    break;
+             }
+             
+            
+            
+
+            
+           
 
             case 2:
-            
+            int counterPages2 = 0;
             int optionUserRead2 = 0;
             int optionBookUser = 0;
             System.out.println("Select the User that wants to read");

@@ -36,6 +36,7 @@ public class Controller {
     
 
     /**
+     * It works on creating an object Magazine when a user selects it
      * @param id
      * @param name
      * @param numberPages
@@ -44,7 +45,7 @@ public class Controller {
      * @param url
      * @param periodicity
      * @param category
-     * @return
+     * @return newMagazine <Magazine> <that is the Object with the Atributes selectes bu the User>
      */
     public boolean regMagazine(String id,String name,int numberPages,String publishDate,double sellPrice,String url,String periodicity,int category){
       
@@ -76,7 +77,11 @@ public class Controller {
         Magazine newMagazine = new Magazine(id, name, numberPages, publishDate, sellPrice, url, periodicity,type);
         return listOfBibliographicProducts.add(newMagazine);
     }
-
+    /**
+     * This method gets a position in the Arraylist of Users and depending of the case, it will fin if is Premium or Standard
+     * @param positionUser
+     * @return msg <String> <an String >
+     */
     public String selectUser (int positionUser){
 
         String msg = "";
@@ -91,7 +96,12 @@ public class Controller {
 
         return msg;
     }
-
+    /**
+     * This method search for a position in the user and then for a mag that its buyed by him and make it null to cancel it
+     * @param idMag
+     * @param idUser
+     * @return false <Boolean> <Indicator that the method worked or not >
+     */
     public boolean cancelSub(int idMag,int idUser){
 
         if(listOfUsers.get(idUser).cancelSub(idMag)){
@@ -99,7 +109,14 @@ public class Controller {
         }
        return false;
     }
-    
+    /**
+     * This method makes a reading session with the product that the user selected in executable 
+     * @param idUser
+     * @param idProduct
+     * @param bpv
+     * @param user
+     * @return false <Boolean> <Indicator that the method worked or not >
+     */
     public String readingSession(int idUser,int idProduct,BibliographicProduct bp,User user){
         
         String msg = ""; 
@@ -110,7 +127,13 @@ public class Controller {
         
             return msg;
         }
-    
+
+     /**
+     * This method let us Buy a book by a Position in the arraylist of users and a position in the Arraylist verifying if its a book or not 
+     * @param idUser
+     * @param idBook
+     * @return listOfUsers.buyBook <Boolean> <Indicator that the book was buyed or not>
+     */
     public boolean sellBook(int idUser, int idBook){
 
         if(idBook >= listOfBibliographicProducts.size() || idUser >= listOfUsers.size()){
@@ -131,7 +154,12 @@ public class Controller {
         return false;
        
     }
-
+         /**
+     * This method let us Buy a book by a Position in the arraylist of users and a position in the Arraylist verifying if its a Magazine or not 
+     * @param idUser
+     * @param idMagazine
+     * @return listOfUsers.buyMagazine <Boolean> <Indicator that the magazine was buyed or not>
+     */
     public boolean sellMagazine(int idUser, int idMagazine) {
 
         Ticket tc = new Ticket(Calendar.getInstance(), listOfBibliographicProducts.get(idMagazine-1).getSellPrice());
@@ -155,7 +183,10 @@ public class Controller {
         return listOfUsers.get(idUser).showMagList();
     }
     
-
+        /**
+     * This method let us know by a bucle for,all the position that had been addded for this list
+     * @return Booklist <String> <Message that respresents what is contained in the arraylist>
+     */
     public String showBookList(){
 
         String BooksList = "";
@@ -170,7 +201,10 @@ public class Controller {
         return BooksList;
     }
 
-
+    /**
+     * This method let us know by a bucle for,all the position that had been addded for this list of magazines
+     * @return Magazineslist <String> <Message that respresents what is contained in the arraylist>
+     */
     public String showMagazinesList(){
 
         String MagazinesList = "";
@@ -184,7 +218,10 @@ public class Controller {
         }
         return MagazinesList;
     }
-
+       /**
+     * This method let us know by a bucle for,all the position that had been addded for this list of users
+     * @return userslist <String> <Message that respresents what is contained in the arraylist>
+     */
     public String showUsersList() {
 
         String usersList = "";
@@ -194,12 +231,29 @@ public class Controller {
         }
         return  usersList;
     }
-
+     /**
+     * This method extracts the list of users 
+     * @return listOfUsers <Arraylist> <arraylist>
+     */
     public ArrayList<User> getUsers(){
 
         return listOfUsers;
     }
 
+    /**
+     * this method let us modify a magazine as a new Register
+     * @param option
+     * @param option2
+     * @param newMagazineId
+     * @param newMagazineName
+     * @param newMagazineNumberPages
+     * @param newdate
+     * @param newMagazineType
+     * @param newMagazineURl
+     * @param newSellPriceMagazine
+     * @param newPeriodicity
+     * @return magazine <Magazine> <An existing object that has been replaced by another atributes>
+     */
     public boolean modifyMagazines(int option,int option2,String newMagazineId, String newMagazineName,int newMagazineNumberPages,String newdate,int newMagazineType, String newMagazineURl,double newSellPriceMagazine, String newPeriodicity){
 
         
@@ -245,6 +299,20 @@ public class Controller {
     }
 
 
+    /**
+     * this method let us modify a Book as a new Register
+     * @param option
+     * @param option2
+     * @param newid
+     * @param newName
+     * @param newNumberPages
+     * @param newReview
+     * @param newDate
+     * @param newGenderBook
+     * @param newURL
+     * @param newSellPrice
+     * @return book <Book> <An existing object that has been replaced by another atributes>
+     */
     public boolean modifyBooks(int option,int option2,String newid,String newName,int newNumberPages,String newReview,String newDate,int newGenderBook,String newURL,double newSellPrice){
 
         BookType type = BookType.FANTASY;
@@ -289,25 +357,46 @@ public class Controller {
         return false;
     }
 
-   
+     /**
+     * this method let us remove a position in the arraylist 
+     * @param bookPosition
+     * @return listOfBibliographicProducts.remove <Boolean> <Indicator that operation has worked >
+     */
     public boolean deleteBooks(int bookPosition) {
+        
         if(bookPosition>listOfBibliographicProducts.size()){
             return false;
         }
+        if(listOfBibliographicProducts.get(bookPosition) instanceof Book){
         listOfBibliographicProducts.remove(bookPosition);
- 
         return true;
+        }
+        return false;
+        
     }
-
+     /**
+     * this method let us remove a position in the arraylist 
+     * @param bookPosition
+     * @return listOfBibliographicProducts.remove <Boolean> <Indicator that operation has worked >
+     */
     public boolean deleteMagazines(int magazinePosition){
         if(magazinePosition>listOfBibliographicProducts.size()){
             return false;
         }
+        if(listOfBibliographicProducts.get(magazinePosition) instanceof Magazine){
         listOfBibliographicProducts.remove(magazinePosition);
         return true;
+        }
+        return false;
     }
 
-
+     /**
+     * this method let us add a new User in the AarrayList thatw as previously created
+     * @param name
+     * @param id
+     * @param typeUser
+     * @return listOfUsers.add <Boolean> <Indicator that operation has worked >
+     */
     public boolean registerUser(String name, String id,  int typeUser){
         User newUser = null;
         Calendar creationDate = Calendar.getInstance();
@@ -322,7 +411,21 @@ public class Controller {
     }
 
     
-
+    
+    /**
+     * this method let us register a new Book in the arraylist of BibliographicProducts
+     * @param id
+     * @param name
+     * @param numberPages
+     * @param review
+     * @param date
+     * @param bookTypeId
+     * @param url
+     * @param sellPrice
+     * @param amountSoldUnits
+     * @param pagesAcum
+     * @return newBook <Book> <A new Object Book in the ArrayList of Books>
+     */
     public boolean regBook(String id, String name, int numberPages, String review, String date, int bookTypeId, String url, int sellPrice,int amountSoldUnits,int pagesAcum) {
 
         BookType booktype = BookType.SCIENCE_FICTION;
@@ -356,7 +459,12 @@ public class Controller {
 
     
     }
-
+    
+    /**
+     * this method let us make a Ticket printable on Screen for hte User
+     * @param tc
+     * @return tc <Ticket> <A new object ticket that will appear in any buy>
+     */
     public void printTc(Ticket tc) {
 
         SimpleDateFormat formattedDate = new SimpleDateFormat("dd/MM/yyyy");
@@ -371,6 +479,7 @@ public class Controller {
 
     }
 
+    
     public String myLibrary(int idUser){
         String msg = "";
         if (listOfUsers != null && listOfUsers.size() > idUser) {
@@ -397,7 +506,7 @@ public class Controller {
         this.listOfBibliographicProducts = listOfBibliographicProducts;
     }
 
-    
+  
 
 }
 
